@@ -1,0 +1,7 @@
+name: DayNightAnimationPlugin
+version: '1.0-SNAPSHOT'
+main: de.crafterslife.dayNightAnimationPlugin.DayNightAnimationPlugin
+api-version: '1.21'
+prefix: Moin
+authors: [ Das_Leo_ ]
+description: Crafterslife.de
