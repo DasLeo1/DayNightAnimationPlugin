@@ -5,6 +5,7 @@ import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -13,7 +14,7 @@ public class DayNightAnimationPlugin extends JavaPlugin {
     @Override
     public void onEnable() {
 
-        getLogger().info("Starting DayNightAnimationPlugin...");
+        getLogger().info("DayNightAnimationPlugin has been enabled ...");
 
         this.getCommand("day").setExecutor(new DayCommand());
         this.getCommand("night").setExecutor(new NightCommand());
@@ -22,9 +23,20 @@ public class DayNightAnimationPlugin extends JavaPlugin {
     public class DayCommand implements CommandExecutor {
         @Override
         public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-            World world = Bukkit.getWorlds().get(0);  // Hauptwelt
+            if (!(sender instanceof Player)) {
+                sender.sendMessage("§cNur Spieler können diesen Befehl verwenden.");
+                return true;
+            }
+
+            Player player = (Player) sender;
+            if (!player.hasPermission("daynightanimation.day")) {
+                player.sendMessage("§cDu hast keine Berechtigung, die Zeit auf Tag zu setzen.");
+                return true;
+            }
+
+            World world = player.getWorld();
             animateTimeChange(world, 0);  // 0 = Tageszeit
-            sender.sendMessage("§6Die Zeit wird auf §eTag§6 gesetzt!");
+            player.sendMessage("§6Die Zeit wird auf §eTag§6 gesetzt!");
             return true;
         }
     }
@@ -32,9 +44,20 @@ public class DayNightAnimationPlugin extends JavaPlugin {
     public class NightCommand implements CommandExecutor {
         @Override
         public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-            World world = Bukkit.getWorlds().get(0);  // Hauptwelt
+            if (!(sender instanceof Player)) {
+                sender.sendMessage("§cNur Spieler können diesen Befehl verwenden.");
+                return true;
+            }
+
+            Player player = (Player) sender;
+            if (!player.hasPermission("daynightanimation.night")) {
+                player.sendMessage("§cDu hast keine Berechtigung, die Zeit auf Nacht zu setzen.");
+                return true;
+            }
+
+            World world = player.getWorld();
             animateTimeChange(world, 13000);  // 13000 = Nachtzeit
-            sender.sendMessage("§6Die Zeit wird auf §9Nacht§6 gesetzt!");
+            player.sendMessage("§6Die Zeit wird auf §9Nacht§6 gesetzt!");
             return true;
         }
     }

@@ -8,5 +8,16 @@ description: Crafterslife.de
 commands:
   day:
     description: Setzt die Zeit auf Tag.
+    permission: daynightanimation.day
+    permission-message: "§cDu hast keine Berechtigung, die Zeit auf Tag zu setzen."
   night:
     description: Setzt die Zeit auf Nacht.
+    permission: daynightanimation.night
+    permission-message: "§cDu hast keine Berechtigung, die Zeit auf Nacht zu setzen."
+permissions:
+  daynightanimation.day:
+    description: Erlaubt das Setzen der Zeit auf Tag.
+    default: op
+  daynightanimation.night:
+    description: Erlaubt das Setzen der Zeit auf Nacht.
+    default: op
