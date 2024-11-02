@@ -12,6 +12,9 @@ public class DayNightAnimationPlugin extends JavaPlugin {
 
     @Override
     public void onEnable() {
+
+        getLogger().info("Starting DayNightAnimationPlugin...");
+
         this.getCommand("day").setExecutor(new DayCommand());
         this.getCommand("night").setExecutor(new NightCommand());
     }
