@@ -5,3 +5,8 @@ api-version: '1.21'
 prefix: Moin
 authors: [ Das_Leo_ ]
 description: Crafterslife.de
+commands:
+  day:
+    description: Setzt die Zeit auf Tag.
+  night:
+    description: Setzt die Zeit auf Nacht.
