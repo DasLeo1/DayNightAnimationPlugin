@@ -8,6 +8,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Objects;
 
 public class DayNightAnimationPlugin extends JavaPlugin {
 
@@ -16,19 +19,18 @@ public class DayNightAnimationPlugin extends JavaPlugin {
 
         getLogger().info("DayNightAnimationPlugin has been enabled ...");
 
-        this.getCommand("day").setExecutor(new DayCommand());
-        this.getCommand("night").setExecutor(new NightCommand());
+        Objects.requireNonNull(this.getCommand("day")).setExecutor(new DayCommand());
+        Objects.requireNonNull(this.getCommand("night")).setExecutor(new NightCommand());
     }
 
     public class DayCommand implements CommandExecutor {
         @Override
-        public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-            if (!(sender instanceof Player)) {
+        public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
+            if (!(sender instanceof Player player)) {
                 sender.sendMessage("§cNur Spieler können diesen Befehl verwenden.");
                 return true;
             }
 
-            Player player = (Player) sender;
             if (!player.hasPermission("daynightanimation.day")) {
                 player.sendMessage("§cDu hast keine Berechtigung, die Zeit auf Tag zu setzen.");
                 return true;
@@ -43,13 +45,12 @@ public class DayNightAnimationPlugin extends JavaPlugin {
 
     public class NightCommand implements CommandExecutor {
         @Override
-        public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-            if (!(sender instanceof Player)) {
+        public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
+            if (!(sender instanceof Player player)) {
                 sender.sendMessage("§cNur Spieler können diesen Befehl verwenden.");
                 return true;
             }
 
-            Player player = (Player) sender;
             if (!player.hasPermission("daynightanimation.night")) {
                 player.sendMessage("§cDu hast keine Berechtigung, die Zeit auf Nacht zu setzen.");
                 return true;
@@ -65,8 +66,8 @@ public class DayNightAnimationPlugin extends JavaPlugin {
     private void animateTimeChange(World world, long targetTime) {
         new BukkitRunnable() {
             long currentTime = world.getTime();
-            long step = (targetTime > currentTime) ? 100 : -100; // Schrittweite für die Animation
-            int animationLength = 20; // Anzahl der Schritte in der Animation
+            final long step = (targetTime > currentTime) ? 100 : -100; // Schrittweite für die Animation
+            final int animationLength = 20; // Anzahl der Schritte in der Animation
             int steps = 0;
 
             @Override
